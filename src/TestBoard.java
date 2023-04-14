@@ -12,21 +12,24 @@ public class TestBoard extends JFrame implements BotListener{
     GameLogic logic = new GameLogic();
     VertexButton selectedButton;
     GameBot bot;
-    StartMenu menu;
+    GameMenu menu;
+    boolean saveGame;
     Board board;
-    public TestBoard(StartMenu menu) {
+    public TestBoard(GameMenu menu, boolean saveGame) {
         super("Hare And Hounds");
         createJFrame();
         this.menu = menu;
+        this.saveGame = saveGame;
         this.bot = null;
     }
 
-    public TestBoard(StartMenu menu, int difficulty, GameType playerPlaying)
+    public TestBoard(GameMenu menu, boolean saveGame, int difficulty, GameType playerPlaying)
     {
         super("Hare And Hounds");
         createJFrame();
         makeBot(difficulty,playerPlaying);
         this.menu = menu;
+        this.saveGame = saveGame;
     }
 
     private void createJFrame() {
@@ -127,12 +130,16 @@ public class TestBoard extends JFrame implements BotListener{
             selectedButton = null;
             if (logic.checkGameOver()) {
                 displayWinner();
+                if(saveGame)
+                {
+                    logic.saveGameLog("ID-" + Integer.toString(GameCounter.getCountStat()));
+                    GameCounter.incrementCounter();
+                }
                 dispose();
                 menu.setVisible(true);
-            } else {
-                // If the game is not over, proceed to the next turn
-                nextTurn();
             }
+            else
+                nextTurn();
         }
     }
     public void move(VertexButton from, VertexButton to)
@@ -163,7 +170,8 @@ public class TestBoard extends JFrame implements BotListener{
     }
     private void displayWinner()
     {
-        logic.saveGameLog("test");
+        //logic.saveGameLog("test");
+        System.out.println("1");
         if(logic.getRemainingMoves() == 0)
             JOptionPane.showMessageDialog(null, "Rabbit won by repetition!");
         else{
@@ -190,9 +198,9 @@ public class TestBoard extends JFrame implements BotListener{
     public void makeBot(int difficulty, GameType playerPlaying)
     {
         switch (difficulty) {
-            case 1 -> bot = new EasyBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
-            case 2 -> bot = new MediumBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
-            case 3 -> bot = new HardBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
+            case 0 -> bot = new EasyBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
+            case 1 -> bot = new MediumBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
+            case 2 -> bot = new HardBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
         }
         if (logic.getCurrentPlayer() == bot.playing) {
             bot.makeMove();

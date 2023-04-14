@@ -92,17 +92,13 @@ public class GameLogic {
     {
         if(state.getRemainingMoves() == 0)
             return true;
-        if(state.getCurrentPlayer() != GameType.WOLF)
+        if(state.getCurrentPlayer() == GameType.WOLF)
         {
-            for(int i =0; i<11;i++)
-            {
-                if(getPossibleMoves(state.getRabbitVertex()).isEmpty())
-                    return true;
-            }
-            return false;
+            return(getPossibleMoves(state.getRabbitVertex()).isEmpty());
         }
-        else
+        else{
             return (this.vertices[state.getRabbitVertex()].col <= getMinWolfCol());
+        }
     }
     public GameType getCurrentPlayer()
     {

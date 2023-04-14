@@ -73,12 +73,12 @@ public class StartMenu extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TestBoard board;
-                if(difficulty == 0)
-                    board = new TestBoard(StartMenu.this);
-                else
-                    board = new TestBoard(StartMenu.this,difficulty, (playerChoice.charAt(0) == 'W')? GameType.WOLF: GameType.RABBIT);
-                board.setVisible(true);
+//                TestBoard board;
+//                if(difficulty == 0)
+//                    board = new TestBoard(StartMenu.this);
+//                else
+//                    board = new TestBoard(StartMenu.this,difficulty, (playerChoice.charAt(0) == 'W')? GameType.WOLF: GameType.RABBIT);
+//                board.setVisible(true);
                 setVisible(false);
             }
         });

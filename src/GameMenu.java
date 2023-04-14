@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GameMenu extends JFrame {
     // 0 = 2 players
@@ -18,7 +20,7 @@ public class GameMenu extends JFrame {
 
         setTitle("Game Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(700, 300);
         setLocationRelativeTo(null); // Center the window on the screen
         setLayout(new BorderLayout());
 
@@ -35,7 +37,7 @@ public class GameMenu extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
 
         JButton twoPlayerButton = new JButton("2 Players");
-        twoPlayerButton.setName("@P ");
+        twoPlayerButton.setName("2");
         twoPlayerButton.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
         twoPlayerButton.setPreferredSize(new Dimension(150, 20));
         gbc.gridx = 0;
@@ -57,6 +59,7 @@ public class GameMenu extends JFrame {
 
 
         JButton onePlayerButton = new JButton("Player vs Bot");
+        onePlayerButton.setName("1");
         onePlayerButton.setPreferredSize(new Dimension(150, 20));
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -74,6 +77,7 @@ public class GameMenu extends JFrame {
         topCenter.add(onePlayerButton, gbc);
 
         JButton simulationButton = new JButton("Bot Simulation");
+        simulationButton.setName("0");
         simulationButton.setPreferredSize(new Dimension(150, 20));
         gbc.gridx = 2;
         gbc.gridy = 0;
@@ -90,6 +94,24 @@ public class GameMenu extends JFrame {
         });
         topCenter.add(simulationButton, gbc);
 
+        JButton loadGameButton = new JButton("Load Game");
+        loadGameButton.setName("3");
+        loadGameButton.setPreferredSize(new Dimension(150, 20));
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 10, 0, 10);
+        loadGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedMode.setBorder(null);
+                loadGameButton.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+                selectedMode = loadGameButton;
+                settings.removeAll();
+                showLoadGameSettings();
+            }
+        });
+        topCenter.add(loadGameButton, gbc);
+
         centerPanel.add(topCenter, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
 
@@ -101,14 +123,44 @@ public class GameMenu extends JFrame {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-//                TestBoard board;
-//                if(difficulty == 0)
-//                    board = new TestBoard(StartMenu.this);
-//                else
-//                    board = new TestBoard(StartMenu.this,difficulty, (playerChoice.charAt(0) == 'W')? GameType.WOLF: GameType.RABBIT);
-//                board.setVisible(true);
-//                setVisible(false);
+            public void actionPerformed(ActionEvent e)
+            {
+                TestBoard board;
+                Component[] comps = settings.getComponents();
+                switch (selectedMode.getName().charAt(0)){
+                    case '0':
+                        new SimulatedGame(GameMenu.this,
+                                ((Switch)comps[1]).isOn(),
+                                ((Switch)comps[3]).isOn(),
+                                ((JComboBox<?>)comps[5]).getSelectedIndex(),
+                                ((JComboBox<?>)comps[7]).getSelectedIndex());
+                        if(((Switch)comps[3]).isOn())
+                            setVisible(false);
+                        break;
+                    case '1':
+                        board = new TestBoard(GameMenu.this, ((Switch)comps[1]).isOn(),
+                                ((JComboBox<?>)comps[5]).getSelectedIndex(), ((Switch)comps[3]).isOn()? GameType.WOLF: GameType.RABBIT);
+                        board.setVisible(true);
+                        setVisible(false);
+                        break;
+                    case '2':
+                        board = new TestBoard(GameMenu.this, ((Switch)comps[1]).isOn());
+                        board.setVisible(true);
+                        setVisible(false);
+                        break;
+                    case '3':
+                        ReviewBoard reviewBoard = new ReviewBoard(GameLog.loadLog(((JTextField)comps[1]).getText()));
+                        reviewBoard.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                setVisible(true);
+                            }
+                        });
+                        setVisible(false);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         add(startButton, BorderLayout.SOUTH);
@@ -125,12 +177,12 @@ public class GameMenu extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
         settings.add(label1, gbc);
 
-        Switch switch1 = new Switch("Yes", "No");
+        Switch saveGame = new Switch("Yes", "No");
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(5, 5, 5, 5);
-        settings.add(switch1, gbc);
+        settings.add(saveGame, gbc);
         settings.revalidate();
         settings.repaint();
 
@@ -145,12 +197,13 @@ public class GameMenu extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
         settings.add(label1, gbc);
 
-        Switch switch1 = new Switch("Yes", "No");
+        Switch saveGame = new Switch("Yes", "No");
+        saveGame.setName("0");
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(5, 5, 5, 5);
-        settings.add(switch1, gbc);
+        settings.add(saveGame, gbc);
 
         JLabel label2 = new JLabel("Playing");
         gbc.gridx = 0;
@@ -158,11 +211,12 @@ public class GameMenu extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
         settings.add(label2, gbc);
 
-        Switch switch2 = new Switch("Wolves", "Rabbit");
+        Switch playerPlaying = new Switch("Wolves", "Rabbit");
+        playerPlaying.setName("1");
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(5, 5, 5, 5);
-        settings.add(switch2, gbc);
+        settings.add(playerPlaying, gbc);
 
         JLabel label3 = new JLabel("Difficulty");
         gbc.gridx = 0;
@@ -172,6 +226,7 @@ public class GameMenu extends JFrame {
 
         String[] difficulties = {"Easy", "Medium", "Hard"};
         JComboBox<String> difficultyComboBox = new JComboBox<>(difficulties);
+        difficultyComboBox.setName("2");
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
@@ -243,6 +298,26 @@ public class GameMenu extends JFrame {
 
     }
 
+    public void showLoadGameSettings()
+    {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        JLabel label1 = new JLabel("Game Name");
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        settings.add(label1, gbc);
+
+        JTextField gameNameInput = new JTextField(16);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        settings.add(gameNameInput, gbc);
+        settings.revalidate();
+        settings.repaint();
+
+
+    }
 
 }
 

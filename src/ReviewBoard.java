@@ -23,7 +23,7 @@ public class ReviewBoard extends JFrame{
         this.setVisible(true);
     }
     private void createJFrame() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null); // Center the window on the screen
