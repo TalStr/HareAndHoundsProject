@@ -1,10 +1,10 @@
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import GameBots.*;
+import GameEnums.GameType;
+import LogicClasses.GameLogic;
 
-public class SimulatedGame implements BotListener{
+import java.awt.event.*;
+
+public class SimulatedGame implements BotListener {
     GameLogic logic;
     GameBot wolfBot;
     GameBot rabbitBot;

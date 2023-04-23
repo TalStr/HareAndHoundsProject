@@ -1,8 +1,13 @@
+import GraphicItems.CustomButton;
+import LogicClasses.GameLog;
+import LogicClasses.GameState;
+import ProjectUtils.CDLLL;
+import ProjectUtils.Move;
+import GraphicItems.MoveList;
+
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class ReviewBoard extends JFrame{
     final int rows = 5;
@@ -19,7 +24,7 @@ public class ReviewBoard extends JFrame{
         super("Review");
         createJFrame();
         this.log = log;
-        this.startMove = log.moves;
+        this.startMove = log.getMoves();
         this.setVisible(true);
     }
     private void createJFrame() {
@@ -48,15 +53,15 @@ public class ReviewBoard extends JFrame{
         button1.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
-                if(log.moves.move != null)
+                if(log.getMoves().move != null)
                 {
-                    Move cur = log.moves.move;
+                    Move cur = log.getMoves().move;
                     board.makeAnimal(cur.from, state.getVertexInfo(cur.to));
                     board.removeAnimal(cur.to);
                     state.moveAnimal(cur.to,cur.from);
                     movesPanel.deleteTextRow();
                     curMove--;
-                    log.moves = log.moves.prev;
+                    log.moves = log.getMoves().prev;
                 }
             }
         });

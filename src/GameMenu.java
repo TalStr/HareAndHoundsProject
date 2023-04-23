@@ -1,3 +1,7 @@
+import GameEnums.GameType;
+import GraphicItems.Switch;
+import LogicClasses.GameLog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,20 +22,21 @@ public class GameMenu extends JFrame {
     JPanel settings;
     public GameMenu() {
 
+        //set JFrame settings
         setTitle("Game Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 300);
-        setLocationRelativeTo(null); // Center the window on the screen
+        setSize(500, 300);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Create a title label
-        JLabel titleLabel = new JLabel("Game Menu", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        add(titleLabel, BorderLayout.NORTH);
+        // Create a title at top of page
+        JLabel title = new JLabel("Game Menu", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        add(title, BorderLayout.NORTH);
 
-        // Create a JPanel with a GridBagLayout for better positioning
+        // Create a panel to hold settings options at center of page
         JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 10px padding on all sides
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel topCenter = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -125,7 +130,7 @@ public class GameMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                TestBoard board;
+                GameBoard board;
                 Component[] comps = settings.getComponents();
                 switch (selectedMode.getName().charAt(0)){
                     case '0':
@@ -138,13 +143,13 @@ public class GameMenu extends JFrame {
                             setVisible(false);
                         break;
                     case '1':
-                        board = new TestBoard(GameMenu.this, ((Switch)comps[1]).isOn(),
+                        board = new GameBoard(GameMenu.this, ((Switch)comps[1]).isOn(),
                                 ((JComboBox<?>)comps[5]).getSelectedIndex(), ((Switch)comps[3]).isOn()? GameType.WOLF: GameType.RABBIT);
                         board.setVisible(true);
                         setVisible(false);
                         break;
                     case '2':
-                        board = new TestBoard(GameMenu.this, ((Switch)comps[1]).isOn());
+                        board = new GameBoard(GameMenu.this, ((Switch)comps[1]).isOn());
                         board.setVisible(true);
                         setVisible(false);
                         break;

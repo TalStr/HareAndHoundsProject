@@ -1,8 +1,9 @@
+import GameEnums.GameType;
+import GraphicItems.*;
+import LogicClasses.GameState;
+
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
 
 public class Board extends JPanel{
     private final int WINDOW_WIDTH = 800;
