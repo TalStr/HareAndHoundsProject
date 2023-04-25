@@ -1,3 +1,4 @@
+import GraphicItems.Board;
 import GraphicItems.CustomButton;
 import LogicClasses.GameLog;
 import LogicClasses.GameState;

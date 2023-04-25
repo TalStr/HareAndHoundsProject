@@ -1,3 +1,5 @@
+package GraphicItems;
+
 import GameEnums.GameType;
 import GraphicItems.*;
 import LogicClasses.GameState;
@@ -10,7 +12,7 @@ public class Board extends JPanel{
     private final int WINDOW_HEIGHT = 600;
     final int rows = 5;
     final int columns = 9;
-    VertexButton[] playableCells = new VertexButton[11];
+    public VertexButton[] playableCells = new VertexButton[11];
     public Board(GameState state){
         //this.setLayout(new GridBagLayout());
         this.setLayout(new BorderLayout());
