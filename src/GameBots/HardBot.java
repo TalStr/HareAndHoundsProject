@@ -199,7 +199,7 @@ public class HardBot extends GameBot{
         //Switch Based on Color Of the From Vertex
         switch (pattern[from]){
             case ORANGE:
-                //Choose what Purple Vertice To Go To From Orange Vertice
+                //Choose what Purple Vertex To Go To From Orange Vertex
                 //Strategy Implementation...
                 if(from == 3)
                     to = 4;
@@ -217,7 +217,7 @@ public class HardBot extends GameBot{
                 }
                 break;
             case WHITE:
-                //Choose What Purple Vertice To Go To From White Vertice
+                //Choose What Purple Vertex To Go To From White Vertex
                 //Strategy Implementation...
                 if(logic.getVertexPoint(logic.getRabbitVertexID()).row != logic.getVertexPoint(from).row)
                 {

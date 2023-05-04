@@ -126,7 +126,7 @@ public class GameBoard extends JFrame implements BotListener {
 
     private void handleButtonClickOnEmptySpace(VertexButton sourceButton) {
         // If the move is valid, perform the move and update the game state
-        if (logic.canMove(selectedButton.getVertexID(), sourceButton.getVertexID(), logic.getVertexInfo(sourceButton.getVertexID()))) {
+        if (logic.canMove(selectedButton.getVertexID(), sourceButton.getVertexID())) {
             hidePossibleMoves(selectedButton);
             move(selectedButton, sourceButton);
             selectedButton.setBorder(null);
@@ -153,7 +153,7 @@ public class GameBoard extends JFrame implements BotListener {
     }
     private void nextTurn() {
         logic.nextTurn();
-        if (bot != null && logic.getCurrentPlayer() == bot.getPlaying()) { // The bot only controls wolves
+        if (bot != null && logic.getCurrentPlayer() == bot.getPlaying()) {
             bot.makeMove();
         }
     }
@@ -173,8 +173,6 @@ public class GameBoard extends JFrame implements BotListener {
     }
     private void displayWinner()
     {
-        //logic.saveGameLog("test");
-        System.out.println("1");
         if(logic.getRemainingMoves() == 0)
             JOptionPane.showMessageDialog(null, "Rabbit won by repetition!");
         else{

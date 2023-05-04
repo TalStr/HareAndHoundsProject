@@ -11,8 +11,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class ReviewBoard extends JFrame{
-    final int rows = 5;
-    final int columns = 9;
     private static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 650;
     GameState state = new GameState();

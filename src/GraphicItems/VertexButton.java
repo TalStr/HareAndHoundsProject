@@ -11,7 +11,6 @@ public class VertexButton extends JButton {
         this.setLayout(null);
         this.setMargin(new Insets(0, 0, 0, 0));
         this.setBorder(null);
-        //this.addActionListener();
         this.setBackground(Color.LIGHT_GRAY);
     }
     public int getVertexID(){

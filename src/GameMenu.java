@@ -11,14 +11,7 @@ import java.awt.event.WindowEvent;
 
 public class GameMenu extends JFrame {
     // 0 = 2 players
-    int difficulty;
-    String playerChoice = "Wolves";
     JButton selectedMode;
-    Switch saveGame;
-    Switch playerPlaying;
-    Switch bot1;
-    Switch bot2;
-    Switch bot3;
     JPanel settings;
     public GameMenu() {
 

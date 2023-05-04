@@ -51,9 +51,9 @@ public class GameLogic {
     };
     private GameState state = new GameState();
     private GameLog log = new GameLog();
-    public boolean canMove(int from, int to, GameType type)
+    public boolean canMove(int from, int to)
     {
-        if (type == GameType.WOLF)
+        if (getVertexInfo(from) == GameType.WOLF)
             return (wolfG[from][to] == 1);
         else
             return (rabbitG[from][to] == 1);
