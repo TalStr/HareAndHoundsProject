@@ -1,6 +1,7 @@
 package LogicClasses;
 
 import GameEnums.GameType;
+import ProjectUtils.Move;
 import ProjectUtils.Point;
 import java.awt.*;
 import java.io.File;
@@ -149,19 +150,24 @@ public class GameLogic {
     }
     public void undoMove()
     {
-        int[] move = log.getLastMove();
-        log.deleteLastMove();
-        this.moveAnimal(move[1], move[0], true);
-        this.nextTurn();
-        if(state.getCurrentPlayer() == GameType.RABBIT)
-            System.out.println("Rabbit");
-        else
-            System.out.println("Wolf");
+        Move move = log.getLastMove();
+        if (move != null){
+            log.deleteLastMove();
+            this.moveAnimal(move.to, move.from, true);
+            this.nextTurn();
+
+        }
+//        if(state.getCurrentPlayer() == GameType.RABBIT)
+//            System.out.println("Rabbit");
+//        else
+//            System.out.println("Wolf");
     }
     public void undoTwoMoves()
     {
-        undoMove();
-        undoMove();
+        if(log.numOfMoves >= 2){
+            undoMove();
+            undoMove();
+        }
 //        int[] move = log.getLastMove();
 //        log.deleteLastMove();
 //        this.moveAnimal(move[1], move[0], true);

@@ -2,6 +2,7 @@ package LogicClasses;
 
 import GameEnums.GameType;
 import ProjectUtils.CDLLL;
+import ProjectUtils.Move;
 
 import java.io.*;
 
@@ -17,7 +18,7 @@ public class GameLog implements Serializable {
                     GameType.EMPTY, GameType.RABBIT, GameType.WOLF, GameType.EMPTY, GameType.EMPTY};
     public CDLLL moves;
     CDLLL start;
-    int numOfMoves;
+    int numOfMoves = 0;
     public GameLog()
     {
         moves = new CDLLL();
@@ -39,12 +40,13 @@ public class GameLog implements Serializable {
         }
         System.out.println();
     }
-    public int[] getLastMove()
+    public Move getLastMove()
     {
-        return new int[]{moves.prev.move.from, moves.prev.move.to};
+        return moves.prev.move;
     }
     public void deleteLastMove(){
         moves.deleteLast();
+        numOfMoves--;
     }
     public static GameLog loadLog(String fileName){
         GameLog loaded;

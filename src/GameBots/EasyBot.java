@@ -46,5 +46,8 @@ public class EasyBot extends GameBot{
         }
         return (options.size() == 0)? -1: options.get(rnd);
     }
-
+    @Override
+    public int getDiff(){
+        return 0;
+    }
 }

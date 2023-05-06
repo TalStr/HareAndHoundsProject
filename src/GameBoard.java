@@ -30,7 +30,7 @@ public class GameBoard extends JFrame implements BotListener {
     {
         super("Hare And Hounds");
         createJFrame();
-        makeBot(difficulty,playerPlaying);
+        makeBot(difficulty,(playerPlaying == GameType.WOLF)? GameType.RABBIT: GameType.WOLF);
         this.menu = menu;
         this.saveGame = saveGame;
     }
@@ -51,8 +51,8 @@ public class GameBoard extends JFrame implements BotListener {
         b.setPreferredSize(new Dimension(800, 50));
 
         // Add left button
-        CustomButton button1 = new CustomButton("Back");
-        button1.addActionListener(new ActionListener() {
+        CustomButton backButton = new CustomButton("Back");
+        backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(bot == null)
                     logic.undoMove();
@@ -63,26 +63,31 @@ public class GameBoard extends JFrame implements BotListener {
         });
         JPanel leftButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
         leftButtonPanel.setBackground(Color.DARK_GRAY);
-        leftButtonPanel.add(button1);
+        leftButtonPanel.add(backButton);
         b.add(leftButtonPanel, BorderLayout.WEST);
 
         // Add right buttons
-        CustomButton button2 = new CustomButton("Restart");
-        button2.addActionListener(new ActionListener() {
+        CustomButton restartButton = new CustomButton("Restart");
+        restartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                logic = new GameLogic();
                 board.setState(logic.resetState());
+                if(bot != null){
+                    makeBot(bot.getDiff(), bot.getPlaying());
+                }
             }
         });
-        CustomButton button3 = new CustomButton("End Game");
-        button3.addActionListener(new ActionListener() {
+        CustomButton endButton = new CustomButton("End Game");
+        endButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               new ReviewBoard(logic.getLog());
+               dispose();
+               menu.setVisible(true);
             }
         });
         JPanel rightButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         rightButtonPanel.setBackground(Color.DARK_GRAY);
-        rightButtonPanel.add(button2);
-        rightButtonPanel.add(button3);
+        rightButtonPanel.add(restartButton);
+        rightButtonPanel.add(endButton);
         b.add(rightButtonPanel, BorderLayout.EAST);
 
         this.add(b, BorderLayout.SOUTH);
@@ -196,12 +201,12 @@ public class GameBoard extends JFrame implements BotListener {
         simulateBotClick(fromButton);
         simulateBotClick(toButton);
     }
-    public void makeBot(int difficulty, GameType playerPlaying)
+    public void makeBot(int difficulty, GameType playing)
     {
         switch (difficulty) {
-            case 0 -> bot = new EasyBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
-            case 1 -> bot = new MediumBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
-            case 2 -> bot = new HardBot(this, (playerPlaying == GameType.WOLF) ? GameType.RABBIT : GameType.WOLF, logic);
+            case 0 -> bot = new EasyBot(this, playing, logic);
+            case 1 -> bot = new MediumBot(this, playing, logic);
+            case 2 -> bot = new HardBot(this, playing, logic);
         }
         if (logic.getCurrentPlayer() == bot.getPlaying()) {
             bot.makeMove();

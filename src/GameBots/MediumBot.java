@@ -24,5 +24,8 @@ public class MediumBot extends GameBot{
             smart.makeMove();
         }
     }
-
+    @Override
+    public int getDiff(){
+        return 1;
+    }
 }

@@ -18,4 +18,8 @@ public class GameBot {
     public GameType getPlaying(){
         return(this.playing);
     }
+
+    public int getDiff() {
+        return 100;
+    }
 }

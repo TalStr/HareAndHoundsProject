@@ -46,8 +46,13 @@ public class HardBot extends GameBot{
         int matchPattern = -1;
         int matchColumn = -1;
         int preventColumn = -1;
-        for (int i = 0; i < options.size();i++){
+        int winningMove = -1;
+        for (int i = 0; i < options.size() && winningMove == -1;i++){
             //If the option Makes The Pattern And The column of the vertex is bigger than the current matchColumn
+            if(isWinningMoveRabbit(from, options.get(i))){
+                winningMove = options.get(i);
+                toVertex = winningMove;
+            }
             if(moveMakesPattern(from,options.get(i)) && logic.getVertexPoint(options.get(i)).col > matchColumn) {
                 //Update to be best Move
                 matchPattern = options.get(i);
@@ -73,6 +78,9 @@ public class HardBot extends GameBot{
             }
         }
         return toVertex;
+    }
+    private boolean isWinningMoveRabbit(int from, int to){
+        return(logic.getVertexPoint(to).col <= logic.getMinWolfCol());
     }
     private boolean moveMakesPattern(int from, int to)
     {
@@ -254,5 +262,8 @@ public class HardBot extends GameBot{
         }
         return to;
     }
-
+    @Override
+    public int getDiff(){
+        return 2;
+    }
 }
