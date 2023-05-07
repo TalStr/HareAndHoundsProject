@@ -39,18 +39,19 @@ public class GameBoard extends JFrame implements BotListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setLayout(new BorderLayout());
-        this.setLocationRelativeTo(null); // Center the window on the screen
+        this.setLocationRelativeTo(null);
 
         Board board = new Board(logic.getState());
         this.add(board, BorderLayout.CENTER);
         this.board = board;
         setActionListener();
-        // Create south component
+
+        // Create Bar under board
         JPanel b = new JPanel(new BorderLayout());
         b.setBackground(Color.DARK_GRAY);
         b.setPreferredSize(new Dimension(800, 50));
 
-        // Add left button
+        // Add back button
         CustomButton backButton = new CustomButton("Back");
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -66,7 +67,7 @@ public class GameBoard extends JFrame implements BotListener {
         leftButtonPanel.add(backButton);
         b.add(leftButtonPanel, BorderLayout.WEST);
 
-        // Add right buttons
+        // Add restart button
         CustomButton restartButton = new CustomButton("Restart");
         restartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -77,6 +78,8 @@ public class GameBoard extends JFrame implements BotListener {
                 }
             }
         });
+
+        // add end game button
         CustomButton endButton = new CustomButton("End Game");
         endButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -205,8 +208,8 @@ public class GameBoard extends JFrame implements BotListener {
     {
         switch (difficulty) {
             case 0 -> bot = new EasyBot(this, playing, logic);
-            case 1 -> bot = new MediumBot(this, playing, logic);
-            case 2 -> bot = new HardBot(this, playing, logic);
+           // case 1 -> bot = new MediumBot(this, playing, logic);
+            case 1 -> bot = new HardBot(this, playing, logic);
         }
         if (logic.getCurrentPlayer() == bot.getPlaying()) {
             bot.makeMove();

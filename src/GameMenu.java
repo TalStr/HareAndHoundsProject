@@ -15,7 +15,6 @@ public class GameMenu extends JFrame {
     JPanel settings;
     public GameMenu() {
 
-        //set JFrame settings
         setTitle("Game Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
@@ -27,7 +26,7 @@ public class GameMenu extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 24));
         add(title, BorderLayout.NORTH);
 
-        // Create a panel to hold settings options at center of page
+        // Create option bar
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -113,10 +112,13 @@ public class GameMenu extends JFrame {
         centerPanel.add(topCenter, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
 
+        //create dynamic settings panel under option bar
         settings = new JPanel(new GridBagLayout());
         centerPanel.add(settings, BorderLayout.CENTER);
 
         twoPlayerButton.doClick();
+
+        //add star button to bottom of page
 
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
@@ -222,7 +224,7 @@ public class GameMenu extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
         settings.add(label3, gbc);
 
-        String[] difficulties = {"Easy", "Medium", "Hard"};
+        String[] difficulties = {"Easy", "Hard"};
         JComboBox<String> difficultyComboBox = new JComboBox<>(difficulties);
         difficultyComboBox.setName("2");
         gbc.gridx = 1;
@@ -269,21 +271,22 @@ public class GameMenu extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
         settings.add(wolfDiff, gbc);
 
-        String[] difficulties = {"Easy", "Medium", "Hard"};
-        JComboBox<String> wolfDiffChoice = new JComboBox<>(difficulties);
+        String[] difficultiesWolf = {"Easy", "Hard"};
+        JComboBox<String> wolfDiffChoice = new JComboBox<>(difficultiesWolf);
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(5, 5, 5, 5);
         settings.add(wolfDiffChoice, gbc);
 
+        String[] difficultiesRabbit = {"Easy", "Medium", "Hard"};
         JLabel rabbitDiff = new JLabel("Rabbit Difficulty");
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.EAST;
         settings.add(rabbitDiff, gbc);
 
-        JComboBox<String> rabbitDiffChoice = new JComboBox<>(difficulties);
+        JComboBox<String> rabbitDiffChoice = new JComboBox<>(difficultiesRabbit);
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;

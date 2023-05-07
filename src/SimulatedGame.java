@@ -53,8 +53,8 @@ public class SimulatedGame implements BotListener {
     {
         switch (wolfDiff) {
             case 0 -> this.wolfBot = new EasyBot(this, GameType.WOLF, logic);
-            case 1 -> this.wolfBot = new MediumBot(this, GameType.WOLF, logic);
-            case 2 -> this.wolfBot = new HardBot(this, GameType.WOLF, logic);
+            //case 1 -> this.wolfBot = new MediumBot(this, GameType.WOLF, logic);
+            case 1 -> this.wolfBot = new HardBot(this, GameType.WOLF, logic);
         }
         switch (rabbitDiff) {
             case 0 -> this.rabbitBot = new EasyBot(this, GameType.RABBIT, logic);

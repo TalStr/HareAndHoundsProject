@@ -16,11 +16,9 @@ public class MediumBot extends GameBot{
     {
         Random rand = new Random();
         if(rand.nextInt(10) < 2){
-            System.out.println("dumb");
             dumb.makeMove();
         }
         else{
-            System.out.println("smart");
             smart.makeMove();
         }
     }

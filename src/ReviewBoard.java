@@ -30,16 +30,16 @@ public class ReviewBoard extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setLayout(new BorderLayout());
-        this.setLocationRelativeTo(null); // Center the window on the screen
+        this.setLocationRelativeTo(null);
 
         Board board = new Board(this.state);
         this.add(board, BorderLayout.CENTER);
         this.gameBoard = board;
 
         MoveList rightPanel = new MoveList();
-        rightPanel.setPreferredSize(new Dimension(200, WINDOW_HEIGHT)); // Set the preferred size of the panel
-        rightPanel.setBackground(Color.LIGHT_GRAY); // Set the background color
-        this.add(rightPanel, BorderLayout.EAST); // Add the panel to the right of the board
+        rightPanel.setPreferredSize(new Dimension(200, WINDOW_HEIGHT));
+        rightPanel.setBackground(Color.LIGHT_GRAY);
+        this.add(rightPanel, BorderLayout.EAST);
         this.movesPanel = rightPanel;
 
         JPanel b = new JPanel(new BorderLayout());
@@ -47,7 +47,7 @@ public class ReviewBoard extends JFrame{
         b.setPreferredSize(new Dimension(800, 50));
         JPanel centerButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         centerButtonPanel.setBackground(Color.DARK_GRAY);
-        // Add left button
+        // Add Back button
         CustomButton button1 = new CustomButton("Back");
         button1.addActionListener(new ActionListener()
         {
@@ -65,6 +65,8 @@ public class ReviewBoard extends JFrame{
             }
         });
         centerButtonPanel.add(button1);
+
+        // add restart button
         CustomButton button2 = new CustomButton("Restart");
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
@@ -78,6 +80,7 @@ public class ReviewBoard extends JFrame{
         });
         centerButtonPanel.add(button2);
 
+        // add forward button
         CustomButton button3 = new CustomButton("Forward");
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
